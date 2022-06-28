@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../pages/home/Home';
+import Home from '../pages/Home';
+import About from '../pages/About'
 
 const routes = [
   {
@@ -7,11 +8,16 @@ const routes = [
     name: 'home',
     component: Home
   },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
+  {
+    path: '/products',
+    name: 'products',
+    component: () => import(/* webpackChunkName: "about" */ '../pages/Product.vue')
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About
+  }
 ];
 
 const router = createRouter({
