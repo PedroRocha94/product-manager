@@ -1,8 +1,11 @@
 <template>
   <nav class="navbar">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/products">Products</router-link> |
-    <router-link to="/about">About</router-link>
+    <ul>
+      <router-link tag="li" to="/">Home</router-link>
+      <router-link tag="li" to="/products">Products</router-link>
+      <router-link tag="li" to="/about">About</router-link>
+    </ul>
+    
   </nav>
 </template>
 
