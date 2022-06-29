@@ -1,17 +1,20 @@
 <template>
   <div class="home">
     <Navbar/>
-    <h1>Home Page</h1>
+    <Banner/>
+    <h1>Product Manager</h1>
   </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue';
+import Banner from '../components/Banner.vue';
 
 export default {
   name: 'Home',
   components: {
-    Navbar
+    Navbar,
+    Banner
   }
 }
 </script>
