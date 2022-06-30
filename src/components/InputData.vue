@@ -14,6 +14,8 @@
         v-model="product.description"
         placeholder='Description product'
       />
+
+      <Button label="register" />
     </span>
   </div>
 </template>
