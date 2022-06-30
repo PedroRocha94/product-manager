@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="product-list">
     <DataTable :value="products" responsiveLayout="scroll">
       <Column
         v-for="col of columns"
@@ -23,16 +23,16 @@ export default {
   },
   created() {
     this.columns = [
-      { field: "code", header: "Code" },
+      { field: "id", header: "Id" },
       { field: "name", header: "Name" },
-      { field: "category", header: "Category" },
-      { field: "quantity", header: "Quantity" },
+      { field: "description", header: "Description" }
     ];
   },
   async mounted() {
     try {
       const response = await getAllProducts();
-      console.log(response)
+      let data = response.data;
+      this.products = data.data;
     } catch {
       console.log("Error");
     }
