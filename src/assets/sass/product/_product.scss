@@ -3,7 +3,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
   background-color: aqua;
 
   @import './product_list';
+  
 }
