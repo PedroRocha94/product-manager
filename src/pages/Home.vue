@@ -1,6 +1,6 @@
 <template>
+  <Navbar/>
   <div class="home">
-    <Navbar/>
     <Banner/>
     <h1>Product Manager</h1>
   </div>
