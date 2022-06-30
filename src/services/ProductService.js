@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8080/api/v1';
+const baseUrl = 'http://localhost:8080/api/v1/products';
 
 export function getAllProducts(){
-  let url = baseUrl + '/products';
-  return axios.get(url);
+  return axios.get(baseUrl);
+}
+
+export function postProduct(product){
+  return axios.post(baseUrl, product);
 }

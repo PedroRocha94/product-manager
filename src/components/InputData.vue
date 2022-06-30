@@ -14,19 +14,31 @@
         v-model="product.description"
         placeholder='Description product'
       />
-
-      <Button label="register" />
+      
+      <Button 
+        label="register"
+        @click="registerProduct(product)"
+      />
     </span>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "InputData",
   data() {
     return {
-      product: ''
+      product: {
+        name: '',
+        description: ''
+      }
     };
   },
+  methods: {
+    registerProduct(product) {
+      this.$emit('AddProduct', product);
+    }
+  }
 };
 </script>
