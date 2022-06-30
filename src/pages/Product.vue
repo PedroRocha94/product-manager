@@ -1,17 +1,19 @@
 <template>
   <div class="product">
     <Navbar/>
-    <h1>Products</h1>
+    <ProductList/>
   </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue';
+import ProductList from '../components/ProductList.vue';
 
 export default {
   name: 'Products',
   components: {
-    Navbar
+    Navbar,
+    ProductList
   }
 }
 </script>
