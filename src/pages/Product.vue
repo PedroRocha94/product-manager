@@ -1,7 +1,8 @@
 <template>
   <Navbar/>
   <div class="product">
-    <InputData @AddProduct='requestPostProduct($event)'/>
+    <Toast/>
+    <InputData @AddProduct='requestPostProduct'/>
     <ProductList :products="products"/>
   </div>
 </template>
@@ -29,6 +30,9 @@ export default {
     await this.requestGetAllProducts();
   },
   methods: {
+    notification(severity, detail){
+      this.$toast.add({severity, detail, life: 3000});
+    },
     async requestGetAllProducts() {
       try {
         const response = await getAllProducts();
@@ -42,6 +46,7 @@ export default {
       try {
         await postProduct(product);
         this.requestGetAllProducts();
+        this.notification('success', `${product.name} added!`);
       } catch {
         console.log("Error post");
       }

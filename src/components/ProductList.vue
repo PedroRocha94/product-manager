@@ -6,7 +6,15 @@
         :field="col.field"
         :header="col.header"
         :key="col.field"
-      ></Column>
+      >
+      </Column>
+      <Column header="Actions">
+        <template #body>
+          <Button label="Edit" />
+          <Button label="Remove" 
+            class="p-button-danger" />
+        </template>
+      </Column>
     </DataTable>
   </div>
 </template>
@@ -28,7 +36,7 @@ export default {
     this.columns = [
       { field: "id", header: "Id" },
       { field: "name", header: "Name" },
-      { field: "description", header: "Description" },
+      { field: "description", header: "Description" }
     ];
   }
 };
