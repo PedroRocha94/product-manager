@@ -4,12 +4,15 @@
     <Toast/>
     <InputData 
       @AddProduct='requestPostProduct'
+      @choose-table="activeProductsTable"
     />
+
     <ProductList  
       :products="products"
       @edit-modal="editProduct"
       @inactive-product="requestInactiveProduct"
     />
+
     <ModalEditProduct
       :product="modifyProduct"
       :displayEdit="displayEdit"
@@ -40,15 +43,19 @@ export default {
       product: {},
       modifyProduct: {},
       displayEdit: false,
-      products: []
+      products: [],
+      tableProductActive: true
     }
   },
   async mounted() {
-    await this.requestGetAllProducts();
+    await this.requestGetAllProducts(true);
   },
   methods: {
     notification(severity, detail){
       this.$toast.add({severity, detail, life: 3000});
+    },
+    activeProductsTable(event){
+      this.requestGetAllProducts(event);
     },
     editProduct(product){
       this.modifyProduct = {...product};
@@ -60,20 +67,19 @@ export default {
     closeModal(){
       this.displayEdit = false
     },
-    async requestGetAllProducts() {
+    async requestGetAllProducts(isActive) {
       try {
-        const response = await getAllProducts();
+        const response = await getAllProducts(isActive);
         let data = response.data;
         this.products = data.data;
-        console.log(data);
       } catch {
-        console.log("Error getAll");
+        this.notification('error', 'Products not found!');
       }
     },
     async requestPostProduct(product) {
       try {
         await postProduct(product);
-        this.requestGetAllProducts();
+        this.requestGetAllProducts(this.tableProductActive);
         this.notification('success', `${product.name} added!`);
       } catch {
         this.notification('warn', `${product.name} already exists!`);
@@ -85,7 +91,7 @@ export default {
           name: product.name, 
           description: product.description
         });
-        this.requestGetAllProducts();
+        this.requestGetAllProducts(this.tableProductActive);
         this.closeModal();
         this.notification('info', `${product.name} updated!`);
       } catch {
@@ -96,7 +102,7 @@ export default {
     async requestInactiveProduct(product){
       try {
         await inactiveProduct(product.id);
-        this.requestGetAllProducts();
+        this.requestGetAllProducts(this.tableProductActive);
         this.notification('success', `${product.name} inactivated!`)
       } catch {
         this.notification('error', 'Error in inactive product!')
