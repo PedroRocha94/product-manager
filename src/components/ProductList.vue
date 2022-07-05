@@ -18,13 +18,24 @@
             @click="editProduct(data)"
           />
 
-          <Button label="Remove" 
+          <Button 
+            v-show="!productActive"
+            label="Remove" 
             class="p-button-danger"
           />
 
-          <Button label="Inactive" 
+          <Button 
+            v-if="productActive"
+            label="Inactive" 
             class="p-button-warning"
             @click="inactiveProduct(data)"
+          />
+
+          <Button 
+            v-else
+            label="Active" 
+            class="p-button-warning"
+            @click="activeProduct(data)"
           />
         </template>
       </Column>
@@ -39,6 +50,10 @@ export default {
     products: {
       type: Array,
       default: new Array()
+    },
+    productActive: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -59,6 +74,9 @@ export default {
     },
     inactiveProduct(product){
       this.$emit('inactive-product', product);
+    },
+    activeProduct(product){
+      this.$emit('active-product', product);
     }
   }
 };

@@ -9,8 +9,10 @@
 
     <ProductList  
       :products="products"
+      :productActive="productActive"
       @edit-modal="editProduct"
       @inactive-product="requestInactiveProduct"
+      @active-product="requestActiveProduct"
     />
 
     <ModalEditProduct
@@ -28,7 +30,11 @@ import ProductList from '../components/ProductList.vue';
 import InputData from '../components/InputData.vue';
 import ModalEditProduct from '../components/ModalEditProduct.vue'
 
-import { getAllProducts, postProduct, editProduct, inactiveProduct } from "../services/ProductService.js";
+import { getAllProducts,
+         postProduct,
+         editProduct, 
+         inactiveProduct,
+         activeProduct } from "../services/ProductService.js";
 
 export default {
   name: 'Products',
@@ -44,7 +50,7 @@ export default {
       modifyProduct: {},
       displayEdit: false,
       products: [],
-      tableProductActive: true
+      productActive: true,
     }
   },
   async mounted() {
@@ -55,6 +61,8 @@ export default {
       this.$toast.add({severity, detail, life: 3000});
     },
     activeProductsTable(event){
+      this.productActive = event;
+      console.log(event);
       this.requestGetAllProducts(event);
     },
     editProduct(product){
@@ -79,7 +87,7 @@ export default {
     async requestPostProduct(product) {
       try {
         await postProduct(product);
-        this.requestGetAllProducts(this.tableProductActive);
+        this.requestGetAllProducts(this.productActive);
         this.notification('success', `${product.name} added!`);
       } catch {
         this.notification('warn', `${product.name} already exists!`);
@@ -91,7 +99,7 @@ export default {
           name: product.name, 
           description: product.description
         });
-        this.requestGetAllProducts(this.tableProductActive);
+        this.requestGetAllProducts(this.productActive);
         this.closeModal();
         this.notification('info', `${product.name} updated!`);
       } catch {
@@ -100,14 +108,25 @@ export default {
       }
     },
     async requestInactiveProduct(product){
+      this.activeProduct = true;
       try {
         await inactiveProduct(product.id);
-        this.requestGetAllProducts(this.tableProductActive);
+        this.requestGetAllProducts(this.productActive);
         this.notification('success', `${product.name} inactivated!`)
       } catch {
         this.notification('error', 'Error in inactive product!')
       }
-    }   
+    },
+    async requestActiveProduct(product){
+      this.productActive = false;
+      try {
+        await activeProduct(product.id);
+        this.requestGetAllProducts(this.productActive);
+        this.notification('success', `${product.name} activated!`)
+      } catch {
+        this.notification('error', 'Error in active product!')
+      }
+    }    
   },
 }
 </script>
