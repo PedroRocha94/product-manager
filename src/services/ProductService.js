@@ -19,3 +19,8 @@ export function inactiveProduct(id){
   let url = baseUrl + `/${id}/inactive`;
   return axios.patch(url);
 }
+
+export function activeProduct(id){
+  let url = baseUrl + `/${id}/active`;
+  return axios.patch(url);
+}
