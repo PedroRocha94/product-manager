@@ -19,6 +19,7 @@ import Row from 'primevue/row';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
 
 const app = createApp(App);
 
@@ -35,5 +36,6 @@ app.component('Row', Row);
 app.component('InputText', InputText);
 app.component('Button', Button);
 app.component('Dialog', Dialog);
+app.component('Dropdown', Dropdown);
 
 app.mount('#app');
