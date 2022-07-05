@@ -17,8 +17,15 @@
             label="Edit" 
             @click="editProduct(data)"
           />
+
           <Button label="Remove" 
-            class="p-button-danger" />
+            class="p-button-danger"
+          />
+
+          <Button label="Inactive" 
+            class="p-button-warning"
+            @click="inactiveProduct(data)"
+          />
         </template>
       </Column>
     </DataTable>
@@ -49,6 +56,9 @@ export default {
   methods:{
     editProduct(product){
       this.$emit('edit-modal', product);
+    },
+    inactiveProduct(product){
+      this.$emit('inactive-product', product);
     }
   }
 };

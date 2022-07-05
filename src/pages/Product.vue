@@ -8,6 +8,7 @@
     <ProductList  
       :products="products"
       @edit-modal="editProduct"
+      @inactive-product="requestInactiveProduct"
     />
     <ModalEditProduct
       :product="modifyProduct"
@@ -24,7 +25,7 @@ import ProductList from '../components/ProductList.vue';
 import InputData from '../components/InputData.vue';
 import ModalEditProduct from '../components/ModalEditProduct.vue'
 
-import { getAllProducts, postProduct, editProduct } from "../services/ProductService.js";
+import { getAllProducts, postProduct, editProduct, inactiveProduct } from "../services/ProductService.js";
 
 export default {
   name: 'Products',
@@ -49,11 +50,22 @@ export default {
     notification(severity, detail){
       this.$toast.add({severity, detail, life: 3000});
     },
+    editProduct(product){
+      this.modifyProduct = {...product};
+      this.showModal();
+    },
+    showModal(){
+      this.displayEdit = true;
+    },
+    closeModal(){
+      this.displayEdit = false
+    },
     async requestGetAllProducts() {
       try {
         const response = await getAllProducts();
         let data = response.data;
         this.products = data.data;
+        console.log(data);
       } catch {
         console.log("Error getAll");
       }
@@ -81,16 +93,15 @@ export default {
         this.notification('error', `${product.name} not updated!`);
       }
     },
-    editProduct(product){
-      this.modifyProduct = {...product};
-      this.showModal();
-    },
-    showModal(){
-      this.displayEdit = true;
-    },
-    closeModal(){
-      this.displayEdit = false
-    }
+    async requestInactiveProduct(product){
+      try {
+        await inactiveProduct(product.id);
+        this.requestGetAllProducts();
+        this.notification('success', `${product.name} inactivated!`)
+      } catch {
+        this.notification('error', 'Error in inactive product!')
+      }
+    }   
   },
 }
 </script>
