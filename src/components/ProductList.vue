@@ -1,6 +1,9 @@
 <template>
   <div class="product-list">
-    <DataTable :value="products" responsiveLayout="scroll">
+    <DataTable 
+      :value="products" 
+      responsiveLayout="scroll"
+    >
       <Column
         v-for="col of columns"
         :field="col.field"
@@ -9,8 +12,11 @@
       >
       </Column>
       <Column header="Actions">
-        <template #body>
-          <Button label="Edit" />
+        <template #body="{data}">
+          <Button 
+            label="Edit" 
+            @click="editProduct(data)"
+          />
           <Button label="Remove" 
             class="p-button-danger" />
         </template>
@@ -20,6 +26,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     products: {
@@ -29,7 +36,7 @@ export default {
   },
   data() {
     return {
-      columns: null,
+      columns: null
     };
   },
   created() {
@@ -38,6 +45,11 @@ export default {
       { field: "name", header: "Name" },
       { field: "description", header: "Description" }
     ];
+  },
+  methods:{
+    editProduct(product){
+      this.$emit('edit-modal', product);
+    }
   }
 };
 </script>

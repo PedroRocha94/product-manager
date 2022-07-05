@@ -2,8 +2,19 @@
   <Navbar/>
   <div class="product">
     <Toast/>
-    <InputData @AddProduct='requestPostProduct'/>
-    <ProductList :products="products"/>
+    <InputData 
+      @AddProduct='requestPostProduct'
+    />
+    <ProductList  
+      :products="products"
+      @edit-modal="editProduct"
+    />
+    <ModalEditProduct
+      :product="modifyProduct"
+      :displayEdit="displayEdit"
+      @edit-product="requestEditProduct"
+      @close-modal="closeModal"
+    />
   </div>
 </template>
 
@@ -11,18 +22,23 @@
 import Navbar from '../components/Navbar.vue';
 import ProductList from '../components/ProductList.vue';
 import InputData from '../components/InputData.vue';
+import ModalEditProduct from '../components/ModalEditProduct.vue'
 
-import { getAllProducts, postProduct } from "../services/ProductService.js";
+import { getAllProducts, postProduct, editProduct } from "../services/ProductService.js";
 
 export default {
   name: 'Products',
   components: {
     Navbar,
     ProductList,
-    InputData
+    InputData,
+    ModalEditProduct
   },
   data() {
     return {
+      product: {},
+      modifyProduct: {},
+      displayEdit: false,
       products: []
     }
   },
@@ -48,8 +64,32 @@ export default {
         this.requestGetAllProducts();
         this.notification('success', `${product.name} added!`);
       } catch {
-        console.log("Error post");
+        this.notification('warn', `${product.name} already exists!`);
       }
+    },
+    async requestEditProduct(product){
+      try {
+        await editProduct(product.id, {
+          name: product.name, 
+          description: product.description
+        });
+        this.requestGetAllProducts();
+        this.closeModal();
+        this.notification('info', `${product.name} updated!`);
+      } catch {
+        this.closeModal();
+        this.notification('error', `${product.name} not updated!`);
+      }
+    },
+    editProduct(product){
+      this.modifyProduct = {...product};
+      this.showModal();
+    },
+    showModal(){
+      this.displayEdit = true;
+    },
+    closeModal(){
+      this.displayEdit = false
     }
   },
 }

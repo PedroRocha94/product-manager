@@ -27,6 +27,12 @@
 
 export default {
   name: "InputData",
+  props: {
+    editProduct: {
+      type: Object,
+      default: new Object()
+    }
+  },
   data() {
     return {
       product: {
@@ -38,6 +44,10 @@ export default {
   methods: {
     registerProduct(product) {
       this.$emit('AddProduct', product);
+    },
+    editInfoProduct(){
+      this.product.name = this.editProduct.name;
+      this.product.description = this.editProduct.description;
     }
   }
 };
