@@ -18,6 +18,7 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
 
 const app = createApp(App);
 
@@ -33,5 +34,6 @@ app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('InputText', InputText);
 app.component('Button', Button);
+app.component('Dialog', Dialog);
 
 app.mount('#app');
