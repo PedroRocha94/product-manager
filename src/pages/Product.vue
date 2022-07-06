@@ -98,7 +98,8 @@ export default {
       try {
         await editProduct(product.id, {
           name: product.name, 
-          description: product.description
+          description: product.description,
+          price: product.price
         });
         this.requestGetAllProducts(this.productActive);
         this.closeModal();

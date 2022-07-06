@@ -15,6 +15,11 @@
         label="Description Product" 
         v-model="product.description"
       />
+      <InputNumber
+        label="Price Product"
+        v-model="product.price"
+      />
+
       <Button 
         label="Confirm" 
         @click="editProduct(product)"
