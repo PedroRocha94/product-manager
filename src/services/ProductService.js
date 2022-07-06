@@ -20,6 +20,11 @@ export function deleteProduct(id){
   return axios.delete(url);
 }
 
+export function getProductById(id){
+  let url = baseUrl + `/${id}`;
+  return axios.get(url);
+}
+
 export function inactiveProduct(id){
   let url = baseUrl + `/${id}/inactive`;
   return axios.patch(url);
