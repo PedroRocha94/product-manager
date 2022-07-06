@@ -5,6 +5,7 @@
     <InputData 
       @add-product='requestPostProduct'
       @choose-table="activeProductsTable"
+      @search-product="requestGetProductById"
     />
 
     <ProductList  
@@ -35,6 +36,7 @@ import { getAllProducts,
          postProduct,
          editProduct,
          deleteProduct,
+         getProductById,
          inactiveProduct,
          activeProduct } from "../services/ProductService.js";
 
@@ -117,6 +119,19 @@ export default {
         this.notification('success', `${product.name} removed!`);
       } catch {
         this.notification('error', `Error removing ${product.name}!`);
+      }
+    },
+    async requestGetProductById(product){
+      try {
+        const response = await getProductById(product);
+        let data = response.data.data;
+        console.log(data);
+        let searchProduct = [];
+        searchProduct.push(data);
+        this.products = searchProduct;
+        this.notification('success', `Product ${data.name} found`)
+      } catch {
+        this.notification('error', 'Error get Id');
       }
     },
     async requestInactiveProduct(product){
