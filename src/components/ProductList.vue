@@ -66,7 +66,8 @@ export default {
     this.columns = [
       { field: "id", header: "Id" },
       { field: "name", header: "Name" },
-      { field: "description", header: "Description" }
+      { field: "description", header: "Description" },
+      { field: "price", header: "Price"}
     ];
   },
   methods:{

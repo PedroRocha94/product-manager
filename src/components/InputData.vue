@@ -24,6 +24,13 @@
         placeholder="Description product"
       />
 
+      <InputNumber 
+        v-model="product.price" 
+        mode="decimal" 
+        :minFractionDigits="2" 
+        :maxFractionDigits="2" 
+      />
+
       <Button label="register" @click="registerProduct(product)" />
     </span>
   </div>
@@ -43,6 +50,7 @@ export default {
       product: {
         name: "",
         description: "",
+        price: 0
       },
       selectedTable: null,
 		  tables: [
@@ -53,8 +61,9 @@ export default {
   },
   methods: {
     clearFields(){
-      this.product.name = '',
-      this.product.description = ''
+      this.product.name = '';
+      this.product.description = '';
+      this.product.price = 0;
     },
     registerProduct(product) {
       this.$emit("add-product", product);
