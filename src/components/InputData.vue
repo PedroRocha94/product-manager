@@ -52,8 +52,13 @@ export default {
     }
   },
   methods: {
+    clearFields(){
+      this.product.name = '',
+      this.product.description = ''
+    },
     registerProduct(product) {
-      this.$emit("AddProduct", product);
+      this.$emit("add-product", product);
+      this.clearFields();
     },
     editInfoProduct() {
       this.product.name = this.editProduct.name;
