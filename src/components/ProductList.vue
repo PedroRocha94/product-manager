@@ -22,6 +22,7 @@
             v-show="!productActive"
             label="Remove" 
             class="p-button-danger"
+            @click="removeProduct(data)"
           />
 
           <Button 
@@ -77,6 +78,9 @@ export default {
     },
     activeProduct(product){
       this.$emit('active-product', product);
+    },
+    removeProduct(product){
+      this.$emit('remove-product', product);
     }
   }
 };
