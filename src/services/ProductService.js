@@ -15,6 +15,11 @@ export function editProduct(id, product){
   return axios.put(url, product);
 }
 
+export function deleteProduct(id){
+  let url = baseUrl + `/${id}`;
+  return axios.delete(url);
+}
+
 export function inactiveProduct(id){
   let url = baseUrl + `/${id}/inactive`;
   return axios.patch(url);
