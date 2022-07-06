@@ -5,4 +5,12 @@
     gap: 1rem;
     margin: 2rem;
   }
+
+  .col-12{
+    .input-group{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
 }
