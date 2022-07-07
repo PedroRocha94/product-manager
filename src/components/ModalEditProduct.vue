@@ -1,59 +1,50 @@
 <template>
   <div class="modal-edit-product">
-    <Dialog 
-      header="Edit Product" 
+    <Dialog
+      header="Edit Product"
       v-model:visible="displayEdit"
-      :closable = "false"
+      :closable="false"
       :modal="true"
     >
-      <InputText 
-        label="Name Product" 
-        v-model="product.name"
-      />
+      <InputText label="Name Product" v-model="product.name" />
 
-      <InputText 
-        label="Description Product" 
-        v-model="product.description"
-      />
-      <InputNumber
-        label="Price Product"
-        v-model="product.price"
-      />
+      <InputText label="Description Product" v-model="product.description" />
 
-      <Button 
-        label="Confirm" 
-        @click="editProduct(product)"
-      />
-      <Button 
-        label="Cancel" 
-        class="p-button-danger"
-        @click="cancelEdit"
-      />
+      <InputNumber label="Price Product" v-model="product.price" />
+
+      <Button label="Confirm" @click="editProduct(product)" />
+      
+      <Button label="Cancel" class="p-button-danger" @click="close" />
     </Dialog>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ModalEditProduct',
+  name: "ModalEditProduct",
+  emits: ["edit-product"],
   props: {
-    displayEdit: {
-      type: Boolean,
-      default: false
-    },
     product: {
       type: Object,
-      default: new Object()
-    }
+      default: new Object(),
+    },
+  },
+  data() {
+    return {
+      displayEdit: false,
+    };
   },
   methods: {
-    editProduct(product){
-      this.$emit('edit-product', product);
+    show() {
+      this.displayEdit = true;
     },
-    cancelEdit(){
-      this.$emit('close-modal');
-    }
-  }
+    close() {
+      this.displayEdit = false;
+    },
+    editProduct(product) {
+      this.$emit("edit-product", product);
+    },
+  },
 };
 </script>
 
