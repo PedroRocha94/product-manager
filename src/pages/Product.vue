@@ -2,26 +2,63 @@
   <Navbar/>
   <div class="product">
     <Toast/>
-    <InputData 
-      @add-product='requestPostProduct'
-      @choose-table="activeProductsTable"
-      @search-product="requestGetProductById"
-    />
+    <div class="button-selected-tables">
+      <span>Choose table product</span>
+      <div class="buttons">
+        <Button 
+          label="Table Product Active"
+          @click="seeProductsActiveTable"
+        />
+
+        <Button 
+          label="Table Product Inactive"
+          @click="seeProductsInactiveTable"
+        />
+      </div>
+    </div>
+
+    <div class="input-data">
+      <InputText
+        id="name-product"
+        type="text"
+        v-model="product.name"
+        placeholder="Name product"
+      />
+
+      <InputText
+        id="description-product"
+        type="text"
+        v-model="product.description"
+        placeholder="Description product"
+      />
+
+      <InputNumber
+        v-model="product.price"
+        mode="decimal"
+        :minFractionDigits="2"
+        :maxFractionDigits="2"
+      />
+
+      <Button 
+        label="register" 
+        @click="registerProduct(product)"
+      />
+    </div>
 
     <ProductList  
       :products="products"
       :productActive="productActive"
-      @remove-product="requestRemoveProduct"
-      @edit-modal="editProduct"
-      @inactive-product="requestInactiveProduct"
-      @active-product="requestActiveProduct"
+      @remove-product="removeProduct"
+      @edit-modal="editModal"
+      @inactive-product="inactiveProduct"
+      @active-product="activeProduct"
     />
 
     <ModalEditProduct
+      ref="modalEditProduct"
       :product="modifyProduct"
       :displayEdit="displayEdit"
-      @edit-product="requestEditProduct"
-      @close-modal="closeModal"
+      @edit-product="editProduct"
     />
   </div>
 </template>
@@ -29,54 +66,82 @@
 <script>
 import Navbar from '../components/Navbar.vue';
 import ProductList from '../components/ProductList.vue';
-import InputData from '../components/InputData.vue';
-import ModalEditProduct from '../components/ModalEditProduct.vue'
+import ModalEditProduct from '../components/ModalEditProduct.vue';
 
-import { getAllProducts,
-         postProduct,
-         editProduct,
-         deleteProduct,
-         getProductById,
-         inactiveProduct,
-         activeProduct } from "../services/ProductService.js";
+
+import { 
+  getAllProducts,
+  postProduct,
+  editProduct,
+  deleteProduct,
+  getProductById,
+  patchInactiveProduct,
+  patchActiveProduct 
+} from "../services/ProductService.js";
 
 export default {
   name: 'Products',
   components: {
     Navbar,
     ProductList,
-    InputData,
     ModalEditProduct
   },
   data() {
     return {
-      product: {},
+      product: {
+        name: '',
+        description: '',
+        price: null
+      },
       modifyProduct: {},
       displayEdit: false,
+      displayDetails: false,
       products: [],
       productActive: true,
+      productDetails: {}
     }
-  },
-  async mounted() {
-    await this.requestGetAllProducts(true);
   },
   methods: {
     notification(severity, detail){
       this.$toast.add({severity, detail, life: 3000});
     },
-    activeProductsTable(event){
-      this.productActive = event;
-      this.requestGetAllProducts(event);
+    seeProductsActiveTable(){
+      this.productActive = true;
+      this.requestGetAllProducts(this.productActive);
     },
-    editProduct(product){
+    seeProductsInactiveTable(){
+      this.productActive = false;
+      this.requestGetAllProducts(this.productActive);
+    },
+    editModal(product){
       this.modifyProduct = {...product};
-      this.showModal();
+      this.showModalEditProduct();
     },
-    showModal(){
-      this.displayEdit = true;
+    showModalEditProduct(){
+      this.$refs.modalEditProduct.show();
     },
-    closeModal(){
-      this.displayEdit = false;
+    showModalProductDetails(){
+      this.$refs.modalProductDetails.show();
+    },
+    async registerProduct(product){
+      await this.requestPostProduct(product);
+      await this.requestGetAllProducts(this.productActive);
+    },
+    async removeProduct(product){
+      await this.requestRemoveProduct(product);
+      await this.requestGetAllProducts(this.productActive);
+    },
+    async editProduct(product){
+      await this.requestEditProduct(product);
+      await this.requestGetAllProducts(this.productActive);
+    },
+    async activeProduct(product){
+      await this.requestActiveProduct(product);
+      await this.requestGetAllProducts(this.productActive);
+    },
+    async inactiveProduct(product){
+      await this.requestInactiveProduct(product);
+      await this.requestGetAllProducts(this.productActive);
     },
     async requestGetAllProducts(isActive) {
       try {
@@ -84,13 +149,13 @@ export default {
         let data = response.data;
         this.products = data.data;
       } catch {
+        this.products = [];
         this.notification('error', 'Products not found!');
       }
     },
     async requestPostProduct(product) {
       try {
         await postProduct(product);
-        this.requestGetAllProducts(this.productActive);
         this.notification('success', `${product.name} added!`);
       } catch {
         this.notification('warn', `${product.name} already exists!`);
@@ -103,19 +168,15 @@ export default {
           description: product.description,
           price: product.price
         });
-        this.requestGetAllProducts(this.productActive);
-        this.closeModal();
+        this.$refs.modalEditProduct.close();
         this.notification('info', `${product.name} updated!`);
       } catch {
-        this.closeModal();
         this.notification('error', `${product.name} not updated!`);
       }
     },
     async requestRemoveProduct(product){
-      this.productActive = false;
       try {
         await deleteProduct(product.id);
-        this.requestGetAllProducts(this.productActive);
         this.notification('success', `${product.name} removed!`);
       } catch {
         this.notification('error', `Error removing ${product.name}!`);
@@ -125,30 +186,25 @@ export default {
       try {
         const response = await getProductById(product);
         let data = response.data.data;
-        console.log(data);
         let searchProduct = [];
         searchProduct.push(data);
         this.products = searchProduct;
-        this.notification('success', `Product ${data.name} found`)
       } catch {
+        this.products = [];
         this.notification('error', 'Error get Id');
       }
     },
     async requestInactiveProduct(product){
-      this.activeProduct = true;
       try {
-        await inactiveProduct(product.id);
-        this.requestGetAllProducts(this.productActive);
+        await patchInactiveProduct(product.id);
         this.notification('success', `${product.name} inactivated!`);
       } catch {
         this.notification('error', 'Error in inactive product!');
       }
     },
     async requestActiveProduct(product){
-      this.productActive = false;
       try {
-        await activeProduct(product.id);
-        this.requestGetAllProducts(this.productActive);
+        await patchActiveProduct(product.id);
         this.notification('success', `${product.name} activated!`);
       } catch {
         this.notification('error', 'Error in active product!');
