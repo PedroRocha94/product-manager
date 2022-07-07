@@ -9,7 +9,3 @@ export default {
   name: 'Banner'
 }
 </script>
-
-<style>
-
-</style>
