@@ -26,12 +26,12 @@ export function getProductById(id){
   return axios.get(url);
 }
 
-export function inactiveProduct(id){
+export function patchInactiveProduct(id){
   let url = baseUrl + `/${id}/inactive`;
   return axios.patch(url);
 }
 
-export function activeProduct(id){
+export function patchActiveProduct(id){
   let url = baseUrl + `/${id}/active`;
   return axios.patch(url);
 }
