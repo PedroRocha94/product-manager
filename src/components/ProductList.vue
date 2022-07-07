@@ -3,18 +3,34 @@
     <DataTable :value="products" responsiveLayout="scroll">
       <Column header="Id">
         <template #body="{data}">
-          <RouterLink tag="Button" :to="`/${data.id}/details`">
+          <RouterLink 
+            tag="Button" 
+            :to="`/${data.id}/details`"
+            @click="searchProductById(data)"  
+          >
             {{data.id}}
           </RouterLink>
         </template>
       </Column>
-      <Column
-        v-for="col of columns"
-        :field="col.field"
-        :header="col.header"
-        :key="col.field"
-      >
+
+      <Column header="Name">
+        <template #body="{data}">
+          {{data.name}}
+        </template>
       </Column>
+
+      <Column header="Description">
+        <template #body="{data}">
+          {{data.description}}
+        </template>
+      </Column>
+
+      <Column header="Price">
+        <template #body="{data}">
+          {{data.price}}
+        </template>
+      </Column>
+
       <Column header="Actions">
         <template #body="{ data }">
           <Button 
@@ -60,18 +76,6 @@ export default {
       default: true,
     },
   },
-  data() {
-    return {
-      columns: null,
-    };
-  },
-  created() {
-    this.columns = [
-      { field: "name", header: "Name" },
-      { field: "description", header: "Description" },
-      { field: "price", header: "Price" },
-    ];
-  },
   methods: {
     editProduct(product) {
       this.$emit("edit-modal", product);
@@ -84,6 +88,9 @@ export default {
     },
     removeProduct(product) {
       this.$emit("remove-product", product);
+    },
+    searchProductById(product){
+      this.$emit('search-product', product);
     }
   },
 };
