@@ -31,7 +31,10 @@
         :maxFractionDigits="2"
       />
 
-      <Button label="register" @click="registerProduct(product)" />
+      <Button 
+        label="register" 
+        @click="registerProduct(product)"
+      />
     </span>
 
     <div class="col-12 md:col-4">
@@ -78,9 +81,14 @@ export default {
   },
   methods: {
     clearFields() {
-      this.product.name = "";
-      this.product.description = "";
-      this.product.price = 0;
+      if (this.product.name != ""){
+        this.product.name = "";
+        this.product.description = "";
+        this.product.price = 0;
+      }
+      if (this.searchProductId != null){
+        this.searchProductId = null
+      }
     },
     registerProduct(product) {
       this.$emit("add-product", product);
@@ -95,6 +103,7 @@ export default {
     },
     searchProduct(searchProductId){
       this.$emit('search-product', searchProductId);
+      this.clearFields();
     }
   },
 };
