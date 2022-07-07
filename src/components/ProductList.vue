@@ -1,16 +1,13 @@
 <template>
   <div class="product-list">
     <DataTable :value="products" responsiveLayout="scroll">
-
-      <Column header="Details">
+      <Column header="Id">
         <template #body="{data}">
-          <Button 
-            icon="pi pi-eye"
-            @click="openProductDetails(data)"
-          />
+          <RouterLink tag="Button" :to="`/${data.id}/details`">
+            {{data.id}}
+          </RouterLink>
         </template>
       </Column>
-
       <Column
         v-for="col of columns"
         :field="col.field"
@@ -21,29 +18,29 @@
       <Column header="Actions">
         <template #body="{ data }">
           <Button 
-            label="Edit" 
+            icon="pi pi-pencil"
             @click="editProduct(data)"
           />
 
           <Button
-            v-show="!productActive"
-            label="Remove"
-            class="p-button-danger"
-            @click="removeProduct(data)"
-          />
-
-          <Button
             v-if="productActive"
-            label="Inactive"
+            icon="pi pi-eye-slash"
             class="p-button-warning"
             @click="inactiveProduct(data)"
           />
 
           <Button
             v-else
-            label="Active"
+            icon="pi pi-eye"
             class="p-button-warning"
             @click="activeProduct(data)"
+          />
+
+          <Button
+            v-show="!productActive"
+            icon="pi pi-trash"
+            class="p-button-danger"
+            @click="removeProduct(data)"
           />
         </template>
       </Column>
@@ -70,7 +67,6 @@ export default {
   },
   created() {
     this.columns = [
-      { field: "id", header: "Id" },
       { field: "name", header: "Name" },
       { field: "description", header: "Description" },
       { field: "price", header: "Price" },
@@ -88,9 +84,6 @@ export default {
     },
     removeProduct(product) {
       this.$emit("remove-product", product);
-    },
-    openProductDetails(product){
-      this.$emit('see-details', product);
     }
   },
 };
