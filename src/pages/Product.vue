@@ -133,7 +133,6 @@ export default {
             this.activeProduct(product);
         },
         reject: () => {
-            this.notification('error', `${product.name} has not active`);
         }
       });
     },
@@ -146,7 +145,6 @@ export default {
             this.inactiveProduct(product);
         },
         reject: () => {
-            this.notification('error', `${product.name} has not inactive`);
         }
       });
     },
@@ -159,7 +157,6 @@ export default {
             this.removeProduct(product);
         },
         reject: () => {
-            this.notification('error', `${product.name} has not removed`);
         }
       });
     },
