@@ -6,14 +6,15 @@
       :closable="false"
       :modal="true"
     >
+      <label>Name Product: </label>
       <InputText label="Name Product" v-model="product.name" />
-
+      <label>Description Product: </label>
       <InputText label="Description Product" v-model="product.description" />
-
+      <label>Price Product: </label>
       <InputNumber label="Price Product" v-model="product.price" />
 
       <Button label="Confirm" @click="editProduct(product)" />
-      
+
       <Button label="Cancel" class="p-button-danger" @click="close" />
     </Dialog>
   </div>
