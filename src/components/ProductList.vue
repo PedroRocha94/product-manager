@@ -1,7 +1,7 @@
 <template>
   <div class="product-list">
-    <DataTable :value="products" :scrollable="true">
-      <Column header="Id">
+    <DataTable class="data-table" :value="products" :scrollable="true">
+      <Column class="column-data-table" header="Id">
         <template #body="{data}">
           <RouterLink 
             tag="Button" 
@@ -13,55 +13,57 @@
         </template>
       </Column>
 
-      <Column header="Name">
+      <Column class="column-data-table" header="Name">
         <template #body="{data}">
           {{data.name}}
         </template>
       </Column>
 
-      <Column header="Description">
+      <Column class="column-data-table" header="Description">
         <template #body="{data}">
           {{data.description}}
         </template>
       </Column>
 
-      <Column header="Price">
+      <Column class="column-data-table" header="Price">
         <template #body="{data}">
           {{data.price}}
         </template>
       </Column>
 
-      <Column header="Actions">
+      <Column class="column-data-table" header="Actions">
         <template #body="{ data }">
-          <Button 
-            icon="pi pi-pencil"
-            v-tooltip.top="'Edit'"
-            @click="editProduct(data)"
-          />
+          <div class="column-data-table-buttons">
+            <Button 
+              icon="pi pi-pencil"
+              v-tooltip.top="'Edit'"
+              @click="editProduct(data)"
+            />
 
-          <Button
-            v-if="productActive"
-            icon="pi pi-eye-slash"
-            class="p-button-warning"
-            v-tooltip.top="'Active Product'"
-            @click="inactiveProduct(data)"
-          />
+            <Button
+              v-if="productActive"
+              icon="pi pi-eye-slash"
+              class="p-button-warning"
+              v-tooltip.top="'Active Product'"
+              @click="inactiveProduct(data)"
+            />
 
-          <Button
-            v-else
-            icon="pi pi-eye"
-            class="p-button-warning"
-            v-tooltip.top="'Inactive Product'"
-            @click="activeProduct(data)"
-          />
+            <Button
+              v-else
+              icon="pi pi-eye"
+              class="p-button-warning"
+              v-tooltip.top="'Inactive Product'"
+              @click="activeProduct(data)"
+            />
 
-          <Button
-            v-show="!productActive"
-            icon="pi pi-trash"
-            class="p-button-danger"
-            v-tooltip.top="'Remove Product'"
-            @click="removeProduct(data)"
-          />
+            <Button
+              v-show="!productActive"
+              icon="pi pi-trash"
+              class="p-button-danger"
+              v-tooltip.top="'Remove Product'"
+              @click="removeProduct(data)"
+            />
+          </div>
         </template>
       </Column>
     </DataTable>
