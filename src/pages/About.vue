@@ -1,21 +1,27 @@
 <template>
-  <Navbar/>
+  <Navbar />
   <div class="about">
-    <h1>About</h1>
-    <p>This project was developed from a challenge created by Rogério Silva 
-      {link github} where an API of a CRUD of products was consumed.
-      {repository link}
-    </p>
+    <div class="content-about">
+      <h1 class="about-title">About</h1>
+      <p class="about-description">
+        This project was developed from a challenge created by Rogério Silva
+        <a href="https://github.com/rogerioSilva60">link github</a>
+        where an API of a CRUD of products was consumed.
+        <a href="https://github.com/rogerioSilva60/test-project-spring"
+          >repository link</a
+        >
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue'
+import Navbar from "../components/Navbar.vue";
 
 export default {
-  name: 'About',
+  name: "About",
   components: {
-    Navbar
-  }
-}
+    Navbar,
+  },
+};
 </script>
