@@ -1,24 +1,24 @@
 <template>
   <div class="product-details">
-    <h1>Product Details</h1>
-    <Card>
+    <Card class="card-product-details">
       <template #title>
-          <h3><strong>Details of {{ product.name }}</strong></h3>
+        <h3 class="title"><strong>Details of {{ product.name }}</strong></h3>
       </template>
       <template #content>
-          <span><strong>Nome: </strong>{{product.name}}</span><br>
-          <span><strong>Description: </strong>{{product.description}}</span><br>
-          <span><strong>Price: </strong>{{product.price}}</span><br>
-          <span><strong>Created Date: </strong>{{product.createdDate}}</span><br>
-          <span><strong>Updated Date: </strong>{{product.updatedDate}}</span><br>
-
+        <span><strong>Id: </strong>{{product.id}}</span>
+        <span><strong>Status: </strong>{{status}}</span>
+        <span><strong>Nome: </strong>{{product.name}}</span>
+        <span><strong>Description: </strong>{{product.description}}</span>
+        <span><strong>Price: </strong>{{product.price}}</span>
+        <span><strong>Created Date: </strong>{{product.createdDate}}</span>
+        <span><strong>Updated Date: </strong>{{product.updatedDate}}</span>
       </template>
       <template #footer>
-          <Button 
-            icon="pi pi-arrow-left" 
-            label="Back"
-            @click="returnTable"
-          />
+        <Button 
+          icon="pi pi-arrow-left" 
+          label="Back"
+          @click="returnTable"
+        />
       </template>
     </Card>
   </div>
@@ -40,9 +40,13 @@ export default {
       product: {}
     }
   },
+  computed:{
+    status(){
+      return this.product.isActive ? "Ativo" : "Inativo"
+    }
+  },
   async mounted(){
     await this.requestProductById();
-    console.log(this.product)
   },
   methods: {
     returnTable(){
