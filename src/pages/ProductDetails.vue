@@ -1,22 +1,24 @@
 <template>
   <div class="product-details">
     <h1>Product Details</h1>
-    {{id}}
     <Card>
       <template #title>
-          Advanced Card
+          <h3><strong>Details of {{ product.name }}</strong></h3>
       </template>
       <template #content>
-          <span>Nome: {{product.name}}</span>
-          <span>Description: {{product.description}}</span>
-          <span>Price: {{product.price}}</span>
-          <span>Created Date: {{product.createdDate}}</span>
-          <span>Updated Date: {{product.updatedDate}}</span>
+          <span><strong>Nome: </strong>{{product.name}}</span><br>
+          <span><strong>Description: </strong>{{product.description}}</span><br>
+          <span><strong>Price: </strong>{{product.price}}</span><br>
+          <span><strong>Created Date: </strong>{{product.createdDate}}</span><br>
+          <span><strong>Updated Date: </strong>{{product.updatedDate}}</span><br>
 
       </template>
       <template #footer>
-          <Button icon="pi pi-check" label="Save" />
-          <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />
+          <Button 
+            icon="pi pi-arrow-left" 
+            label="Back"
+            @click="returnTable"
+          />
       </template>
     </Card>
   </div>
@@ -43,6 +45,9 @@ export default {
     console.log(this.product)
   },
   methods: {
+    returnTable(){
+      this.$router.push('/products');
+    },
     async requestProductById(){
       try {
         const response = await getProductById(this.id);
