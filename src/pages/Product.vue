@@ -42,6 +42,7 @@
 
       <Button 
         icon="pi pi-pencil"
+        v-tooltip="'Register Product'"
         @click="registerProduct(product)"
       />
     </div>

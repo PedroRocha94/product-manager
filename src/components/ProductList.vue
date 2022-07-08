@@ -1,11 +1,12 @@
 <template>
   <div class="product-list">
-    <DataTable :value="products" responsiveLayout="scroll">
+    <DataTable :value="products" :scrollable="true">
       <Column header="Id">
         <template #body="{data}">
           <RouterLink 
             tag="Button" 
             :to="`/${data.id}/details`"
+            v-tooltip="'See Details'"
           >
             {{data.id}}
           </RouterLink>
@@ -34,6 +35,7 @@
         <template #body="{ data }">
           <Button 
             icon="pi pi-pencil"
+            v-tooltip.top="'Edit'"
             @click="editProduct(data)"
           />
 
@@ -41,6 +43,7 @@
             v-if="productActive"
             icon="pi pi-eye-slash"
             class="p-button-warning"
+            v-tooltip.top="'Active Product'"
             @click="inactiveProduct(data)"
           />
 
@@ -48,6 +51,7 @@
             v-else
             icon="pi pi-eye"
             class="p-button-warning"
+            v-tooltip.top="'Inactive Product'"
             @click="activeProduct(data)"
           />
 
@@ -55,6 +59,7 @@
             v-show="!productActive"
             icon="pi pi-trash"
             class="p-button-danger"
+            v-tooltip.top="'Remove Product'"
             @click="removeProduct(data)"
           />
         </template>

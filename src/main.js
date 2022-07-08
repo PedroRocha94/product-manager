@@ -22,12 +22,15 @@ import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import InputNumber from 'primevue/inputnumber';
 import Card from 'primevue/card';
+import Tooltip from 'primevue/tooltip';
 
 const app = createApp(App);
 
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
+
+app.directive('tooltip', Tooltip);
 
 app.component('Toast', Toast);
 app.component('Menubar', Menubar);
