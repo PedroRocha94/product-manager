@@ -21,6 +21,7 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import InputNumber from 'primevue/inputnumber';
+import Card from 'primevue/card';
 
 const app = createApp(App);
 
@@ -39,5 +40,6 @@ app.component('Button', Button);
 app.component('Dialog', Dialog);
 app.component('Dropdown', Dropdown);
 app.component('InputNumber', InputNumber);
+app.component('Card', Card);
 
 app.mount('#app');
