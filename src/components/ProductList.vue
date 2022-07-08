@@ -28,7 +28,7 @@
 
       <Column class="column-data-table" header="Price">
         <template #body="{data}">
-          {{data.price}}
+          R$ {{data.price}}
         </template>
       </Column>
 
