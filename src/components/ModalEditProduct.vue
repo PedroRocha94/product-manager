@@ -1,21 +1,26 @@
 <template>
   <div class="modal-edit-product">
     <Dialog
+      class="dialog-edit-product"
       header="Edit Product"
       v-model:visible="displayEdit"
       :closable="false"
       :modal="true"
     >
-      <label>Name Product: </label>
-      <InputText label="Name Product" v-model="product.name" />
-      <label>Description Product: </label>
-      <InputText label="Description Product" v-model="product.description" />
-      <label>Price Product: </label>
-      <InputNumber label="Price Product" v-model="product.price" />
+      <div class="input-edit-product">
+        <label>Name Product: </label>
+        <InputText label="Name Product" v-model="product.name" />
+        <label>Description Product: </label>
+        <InputText label="Description Product" v-model="product.description" />
+        <label>Price Product: </label>
+        <InputNumber label="Price Product" v-model="product.price" />
+      </div>
 
-      <Button label="Confirm" @click="editProduct(product)" />
+      <div class="buttons-edit-product">
+        <Button label="Confirm" @click="editProduct(product)" />
 
-      <Button label="Cancel" class="p-button-danger" @click="close" />
+        <Button label="Cancel" class="p-button-danger" @click="close" />
+      </div>
     </Dialog>
   </div>
 </template>
