@@ -1,3 +1,27 @@
 .product-list{
   width: 80%;
+
+  .data-table{
+
+    .column-data-table{
+
+      .link-product-details{
+        text-decoration: none;
+        box-sizing: border-box;
+        padding: 0.3rem;
+        background-color: #d1d6d0;
+        border-radius: 6px;
+      }
+
+      .link-product-details:hover{
+        background-color: #b8b6b6;
+      }
+
+      .column-data-table-buttons{
+        display: flex;
+        flex-direction: row;
+        gap: 0.3rem;
+      }
+    }
+  }
 }

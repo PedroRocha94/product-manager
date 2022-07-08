@@ -4,6 +4,7 @@
       <Column class="column-data-table" header="Id">
         <template #body="{data}">
           <RouterLink 
+            class="link-product-details"
             tag="Button" 
             :to="`/${data.id}/details`"
             v-tooltip="'See Details'"
