@@ -6,7 +6,6 @@
           <RouterLink 
             tag="Button" 
             :to="`/${data.id}/details`"
-            @click="searchProductById(data)"  
           >
             {{data.id}}
           </RouterLink>
@@ -88,9 +87,6 @@ export default {
     },
     removeProduct(product) {
       this.$emit("remove-product", product);
-    },
-    searchProductById(product){
-      this.$emit('search-product', product);
     }
   },
 };
