@@ -51,14 +51,15 @@
       <h2>{{ showTextTable }}</h2>
     </div>
 
+    <ConfirmPopup></ConfirmPopup>
+
     <ProductList  
       :products="products"
       :productActive="productActive"
-      @remove-product="removeProduct"
+      :activeProduct="confirmActiveProduct"
+      :inactiveProduct="confirmInactiveProduct"
+      :removeProduct="confirmRemoveProduct"
       @edit-modal="editModal"
-      @inactive-product="inactiveProduct"
-      @active-product="activeProduct"
-      @search-product="searchProduct"
     />
 
     <ModalEditProduct
@@ -122,6 +123,45 @@ export default {
   methods: {
     notification(severity, detail){
       this.$toast.add({severity, detail, life: 3000});
+    },
+    confirmActiveProduct(event, product){
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: 'Do you want to activate the product?',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.activeProduct(product);
+        },
+        reject: () => {
+            this.notification('error', `${product.name} has not active`);
+        }
+      });
+    },
+    confirmInactiveProduct(event, product){
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: 'Do you want to inactivate the product?',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.inactiveProduct(product);
+        },
+        reject: () => {
+            this.notification('error', `${product.name} has not inactive`);
+        }
+      });
+    },
+    confirmRemoveProduct(event, product){
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: 'Do you want to remove the product?',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.removeProduct(product);
+        },
+        reject: () => {
+            this.notification('error', `${product.name} has not removed`);
+        }
+      });
     },
     clearFields(){
       this.product.name = '';

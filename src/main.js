@@ -23,12 +23,16 @@ import Dropdown from 'primevue/dropdown';
 import InputNumber from 'primevue/inputnumber';
 import Card from 'primevue/card';
 import Tooltip from 'primevue/tooltip';
+import ConfirmationService from 'primevue/confirmationservice';
+import ConfirmPopup from 'primevue/confirmpopup';
+
 
 const app = createApp(App);
 
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
+app.use(ConfirmationService);
 
 app.directive('tooltip', Tooltip);
 
@@ -44,5 +48,6 @@ app.component('Dialog', Dialog);
 app.component('Dropdown', Dropdown);
 app.component('InputNumber', InputNumber);
 app.component('Card', Card);
+app.component('ConfirmPopup', ConfirmPopup);
 
 app.mount('#app');

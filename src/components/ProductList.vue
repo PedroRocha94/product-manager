@@ -44,16 +44,16 @@
               v-if="productActive"
               icon="pi pi-eye-slash"
               class="p-button-warning"
-              v-tooltip.top="'Active Product'"
-              @click="inactiveProduct(data)"
+              v-tooltip.top="'Inactive Product'"
+              @click="inactiveProduct($event, data)"
             />
 
             <Button
               v-else
               icon="pi pi-eye"
               class="p-button-warning"
-              v-tooltip.top="'Inactive Product'"
-              @click="activeProduct(data)"
+              v-tooltip.top="'Active Product'"
+              @click="activeProduct($event, data)"
             />
 
             <Button
@@ -61,7 +61,7 @@
               icon="pi pi-trash"
               class="p-button-danger"
               v-tooltip.top="'Remove Product'"
-              @click="removeProduct(data)"
+              @click="removeProduct($event, data)"
             />
           </div>
         </template>
@@ -81,20 +81,23 @@ export default {
       type: Boolean,
       default: true,
     },
+    activeProduct: {
+      type: Function,
+      default: new Function()
+    },
+    inactiveProduct: {
+      type: Function,
+      default: new Function()
+    },
+    removeProduct: {
+      type: Function,
+      default: new Function()
+    }
   },
   methods: {
     editProduct(product) {
       this.$emit("edit-modal", product);
-    },
-    inactiveProduct(product) {
-      this.$emit("inactive-product", product);
-    },
-    activeProduct(product) {
-      this.$emit("active-product", product);
-    },
-    removeProduct(product) {
-      this.$emit("remove-product", product);
     }
-  },
+  }
 };
 </script>
