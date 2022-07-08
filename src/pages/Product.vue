@@ -3,7 +3,7 @@
   <div class="product">
     <Toast/>
     <div class="button-selected-tables">
-      <span>Choose table product</span>
+      <h2>Choose table product</h2>
       <div class="buttons">
         <Button 
           label="Table Product Active"
@@ -41,9 +41,13 @@
       />
 
       <Button 
-        label="register" 
+        icon="pi pi-pencil"
         @click="registerProduct(product)"
       />
+    </div>
+
+    <div class="text-for-table">
+      <h2>{{ showTextTable }}</h2>
     </div>
 
     <ProductList  
@@ -76,7 +80,6 @@ import {
   postProduct,
   editProduct,
   deleteProduct,
-  getProductById,
   patchInactiveProduct,
   patchActiveProduct 
 } from "../services/ProductService.js";
@@ -100,8 +103,20 @@ export default {
       displayDetails: false,
       products: [],
       productActive: true,
-      productDetails: {}
+      productDetails: {},
+      textTableActive: ""
     }
+  },
+  computed: {
+    showTextTable(){
+      this.textTableActive = this.productActive 
+                          ? "Table of Product Active" 
+                          : "Table of Product Inactive";
+      return this.textTableActive;
+    }
+  },
+  async mounted(){
+    await this.requestGetAllProducts(this.productActive);
   },
   methods: {
     notification(severity, detail){
