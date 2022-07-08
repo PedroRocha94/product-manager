@@ -35,6 +35,7 @@
       <InputNumber
         v-model="product.price"
         mode="decimal"
+        placeholder="0,00"
         :minFractionDigits="2"
         :maxFractionDigits="2"
       />
@@ -52,6 +53,7 @@
       @edit-modal="editModal"
       @inactive-product="inactiveProduct"
       @active-product="activeProduct"
+      @search-product="searchProduct"
     />
 
     <ModalEditProduct
@@ -105,6 +107,11 @@ export default {
     notification(severity, detail){
       this.$toast.add({severity, detail, life: 3000});
     },
+    clearFields(){
+      this.product.name = '';
+      this.product.description = '';
+      this.product.price = '';
+    },
     seeProductsActiveTable(){
       this.productActive = true;
       this.requestGetAllProducts(this.productActive);
@@ -126,6 +133,7 @@ export default {
     async registerProduct(product){
       await this.requestPostProduct(product);
       await this.requestGetAllProducts(this.productActive);
+      this.clearFields();
     },
     async removeProduct(product){
       await this.requestRemoveProduct(product);
@@ -180,18 +188,6 @@ export default {
         this.notification('success', `${product.name} removed!`);
       } catch {
         this.notification('error', `Error removing ${product.name}!`);
-      }
-    },
-    async requestGetProductById(product){
-      try {
-        const response = await getProductById(product);
-        let data = response.data.data;
-        let searchProduct = [];
-        searchProduct.push(data);
-        this.products = searchProduct;
-      } catch {
-        this.products = [];
-        this.notification('error', 'Error get Id');
       }
     },
     async requestInactiveProduct(product){
