@@ -3,7 +3,7 @@
   <div class="product">
     <Toast/>
     <div class="button-selected-tables">
-      <h2>Choose table product</h2>
+      <h2 class="button-selected-tables-title">Choose table product</h2>
       <div class="buttons">
         <Button 
           label="Table Product Active"
