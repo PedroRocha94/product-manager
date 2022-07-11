@@ -252,8 +252,9 @@ export default {
       try {
         await patchInactiveProduct(product.id);
         this.notification('success', `${product.name} inactivated!`);
-      } catch {
-        this.notification('error', 'Error in inactive product!');
+      } catch (error) {
+        let dataError = error.response.data.errors;
+        this.notification('error', `${dataError[0]}!`);
       }
     },
     async requestActiveProduct(product){
