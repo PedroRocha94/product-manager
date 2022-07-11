@@ -243,8 +243,9 @@ export default {
       try {
         await deleteProduct(product.id);
         this.notification('success', `${product.name} removed!`);
-      } catch {
-        this.notification('error', `Error removing ${product.name}!`);
+      } catch (error) {
+        let dataError = error.response.data.errors;
+        this.notification('error', `${dataError[0]}!`);
       }
     },
     async requestInactiveProduct(product){
