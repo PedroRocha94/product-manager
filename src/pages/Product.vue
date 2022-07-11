@@ -209,16 +209,17 @@ export default {
         const response = await getAllProducts(isActive);
         let data = response.data;
         this.products = data.data;
-      } catch {
+      } catch (error) {
         this.products = [];
-        this.notification('error', 'Products not found!');
+        let dataError = error.response.data.error;
+        this.notification('error', `Products ${dataError}!`);
       }
     },
     async requestPostProduct(product) {
       try {
         await postProduct(product);
         this.notification('success', `${product.name} added!`);
-      } catch {
+      } catch (error) {
         this.notification('warn', `${product.name} already exists!`);
       }
     },
