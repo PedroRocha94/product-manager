@@ -234,8 +234,9 @@ export default {
         });
         this.$refs.modalEditProduct.close();
         this.notification('info', `${product.name} updated!`);
-      } catch {
-        this.notification('error', `${product.name} not updated!`);
+      } catch (error) {
+        let dataError = error.response.data.errors;
+        this.notification('error', `${dataError[0]}!`);
       }
     },
     async requestRemoveProduct(product){
