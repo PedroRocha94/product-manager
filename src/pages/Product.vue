@@ -262,7 +262,8 @@ export default {
         await patchActiveProduct(product.id);
         this.notification('success', `${product.name} activated!`);
       } catch {
-        this.notification('error', 'Error in active product!');
+        let dataError = error.response.data.errors;
+        this.notification('error', `${dataError[0]}!`);
       }
     }    
   },
