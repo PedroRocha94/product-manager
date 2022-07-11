@@ -73,6 +73,7 @@
 
 <script>
 export default {
+  emits: ["edit-modal"],
   props: {
     products: {
       type: Array,
