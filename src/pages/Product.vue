@@ -220,7 +220,9 @@ export default {
         await postProduct(product);
         this.notification('success', `${product.name} added!`);
       } catch (error) {
-        this.notification('warn', `${product.name} already exists!`);
+        let dataError = error.response.data.errors;
+        console.log(dataError);
+        this.notification('warn', `${dataError[0]}!`);
       }
     },
     async requestEditProduct(product){
